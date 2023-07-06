@@ -1,13 +1,14 @@
-import {ethers} from 'ethers';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import Web3Modal from "web3modal"
-import { nftaddress, nftmarketaddress } from '../config';
-import NFT from '../artifacts/contracts/NFT.sol/NFT.json';
-import Market from '../artifacts/contracts/NFTMarket.sol/NFTMarket.json';
-import Image from 'next/image'
+import React from "react";
+import { ethers } from "ethers";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Web3Modal from "web3modal";
+import Image from "next/image";
+import { nftaddress, nftmarketaddress } from "../config";
+import NFT from "../artifacts/contracts/NFT.sol/NFT.json";
+import Market from "../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
 
-export default function Home() {
+const HomePage = () => {
   const [nfts, setNfts] = useState([]);
   const [loadingState, setLoadingState] = useState('not-loaded');
 
@@ -17,7 +18,7 @@ export default function Home() {
   }, []);
 
   async function loadNFTs(){
-    const provider = new ethers.providers.JsonRpcProvider();
+    const provider = new ethers.providers.JsonRpcProvider("https://polygon-mumbai.infura.io/v3/4fa55521d0f647f28c1a179e85f454da");
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider);
     const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider);
 
@@ -108,3 +109,5 @@ export default function Home() {
    </div>
   )
 }
+
+export default HomePage;
